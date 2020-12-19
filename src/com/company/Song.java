@@ -1,6 +1,7 @@
 package com.company;
 
 public class Song {
+    private Artist artist;
     private String title;
     private String albumName;
     private int minutes;
@@ -10,14 +11,23 @@ public class Song {
     private String filePath;
 
 
-    public Song(String title, String albumName, int minutes, int seconds, String genre, String fileName, String filePath) {
+    public Song(Artist artistName,String title, String albumName, int minutes, int seconds, String genre, String fileName, String filePath) {
         this.title = title;
+        this.artist=artistName;
         this.albumName = albumName;
         this.minutes = minutes;
         this.seconds = seconds;
         this.genre = genre;
         this.fileName = fileName;
         this.filePath = filePath;
+    }
+
+    public Artist getArtistName() {
+        return artist;
+    }
+
+    public void setArtistName(Artist artistName) {
+        this.artist= artistName;
     }
 
     public String getTitle() {

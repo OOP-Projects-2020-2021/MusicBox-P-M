@@ -4,7 +4,6 @@ public class Artist extends User {
     private int nrOfAlbums;
     private int nrOfSongs;
     private int nrOfSubscribers;
-    private ArtistFeed feed;
     public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers)
     {
         super(username,password,name,imagePath);
