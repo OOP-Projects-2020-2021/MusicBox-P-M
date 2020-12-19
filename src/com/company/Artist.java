@@ -1,10 +1,11 @@
 package com.company;
 
-public class Artist extends User {
+public class Artist extends User implements MusicManager<String> {
     private int nrOfAlbums;
     private int nrOfSongs;
     private int nrOfSubscribers;
     private ArtistFeed feed;
+    private UserLibrary artistLibrary;
     public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers)
     {
         super(username,password,name,imagePath);
@@ -33,4 +34,10 @@ public class Artist extends User {
     public void setNrOfSubscribers(int nrOfSubscribers) {
         this.nrOfSubscribers += nrOfSubscribers;
     }
+
+    @Override
+    public void addSong(String filePath) {
+
+    }
+
 }

@@ -3,7 +3,7 @@ package com.company;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RegularUser extends User{
+public class RegularUser extends User implements MusicManager<Song> {
     private Set<Artist> listOfArtists = new HashSet<Artist>();
     private UserLibrary userLibrary;
 
@@ -18,6 +18,11 @@ public class RegularUser extends User{
 
     public void setListOfArtists(Set<Artist> listOfArtists) {
         this.listOfArtists = listOfArtists;
+    }
+
+    @Override
+    public  void addSong(Song song) {
+
     }
 
 }
