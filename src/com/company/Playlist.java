@@ -9,11 +9,21 @@ public class Playlist {
     private Set<Song>listOfSongs = new HashSet<Song>();
     private int minutes;
     private int seconds;
+    private RegularUser playlistOwner;
 
-    public Playlist(String playlistName) {
+    public Playlist(String playlistName, RegularUser playlistOwner) {
         this.playlistName = playlistName;
         this.minutes = 0;
         this.seconds = 0;
+        this.playlistOwner = playlistOwner;
+    }
+
+    public RegularUser getPlaylistOwner() {
+        return playlistOwner;
+    }
+
+    public void setPlaylistOwner(RegularUser playlistOwner) {
+        this.playlistOwner = playlistOwner;
     }
 
     public void setPlaylistName(String playlistName) {
