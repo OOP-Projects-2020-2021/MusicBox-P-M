@@ -6,9 +6,9 @@ public class Artist extends User implements MusicManager<String> {
     private int nrOfSubscribers;
     private ArtistFeed feed;
     private UserLibrary artistLibrary;
-    public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers)
+    public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers, int type)
     {
-        super(username,password,name,imagePath);
+        super(username,password,name,imagePath,type);
         this.nrOfAlbums=nrOfAlbums;
         this.nrOfSongs=nrOfSongs;
         this.nrOfSubscribers=nrOfSubscribers;

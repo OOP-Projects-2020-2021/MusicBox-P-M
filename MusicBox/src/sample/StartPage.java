@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
 
 
 /**
@@ -26,17 +29,14 @@ public class StartPage extends Stage {
 
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(100, 0, 30, 0));
-
-
-        Image image = new Image("https://lh3.googleusercontent.com/proxy/9frRW8q5oujluFRBFta1k3Ro_HNwRTUSwxpneZqKXiR_x_2QkobLW59Hv0wuqsqCbzpkQkqHoL-Jgj758no8Cw-f5H0n8PawAUEmEBJP2Yx6qflGLjpWDUzD0q0-OgF8_-51");
+        Image image = new Image("background.png");
+        ImageView imageView=new ImageView(image);
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         borderPane.setBackground(new Background(new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 bSize)));
-
-
         Text text = new Text("Welcome to Music Box!");
 
         //Buttons styling
