@@ -113,11 +113,11 @@ public class NewAccount extends Stage {
                String password=textFieldPassword.getText();
                RadioButton selectedRadioButton = (RadioButton) group.getSelectedToggle();
                String value = selectedRadioButton.getText();
-                int existingUser=0;
+               int existingUser=0;
                if(validation(textFieldName,textFieldUsername,textFieldPassword,textFieldConfirmPassword,nameAlert,usernameAlert,passwordAlert,confirmPasswordAlert)) {
                    if (textFieldPassword.getText().equals(textFieldConfirmPassword.getText())) {
                        if (value.equals("Regular User")) {
-                           RegularUser newUser = new RegularUser(username, password, name, "", 0);
+                           //RegularUser newUser = new RegularUser(username, password, name, "", 0);
                            //add array
 
                            try {
@@ -138,7 +138,7 @@ public class NewAccount extends Stage {
                            if(existingUser==0) {
                                try {
                                    FileWriter myWriter = new FileWriter("users.txt", true);
-                                   myWriter.write(name + ", " + username + ", " + password + ", " + "0\n");
+                                   myWriter.write(name + "," + username + "," + password + "," + "0\n");
                                    myWriter.close();
 
                                } catch (IOException e) {
@@ -148,7 +148,7 @@ public class NewAccount extends Stage {
                            }
 
                        } else if (value.equals("Artist")) {
-                           Artist newArtist = new Artist(username, password, name, "", 0, 0, 0, 1);
+                           //Artist newArtist = new Artist(username, password, name, "", 0, 0, 0, 1);
 
                            try {
                                File myObj = new File(textFieldUsername.getText()+".txt");
@@ -165,11 +165,22 @@ public class NewAccount extends Stage {
                                System.out.println("An error occurred.");
                                e.printStackTrace();
                            }
+
+                           try {
+                               FileWriter myWriter = new FileWriter(username+".txt", true);
+                               myWriter.write("0,0,0\n");
+                               myWriter.close();
+
+                           } catch (IOException e) {
+                               System.out.println("Error!");
+                               e.printStackTrace();
+                           }
+
                            if(existingUser==0)
                            {
                                try {
                                    FileWriter myWriter = new FileWriter("users.txt", true);
-                                   myWriter.write(name + ", " + username + ", " + password + ", " + "1\n");
+                                   myWriter.write(name + "," + username + "," + password + "," + "1\n");
                                    myWriter.close();
 
                                } catch (IOException e) {
@@ -178,8 +189,10 @@ public class NewAccount extends Stage {
                                }
                            }
                        }
-                       if(existingUser==0)
-                            close();
+                       if(existingUser==0) {
+                           new Login();
+                           close();
+                       }
 
                    }else{
                        Alert fail= new Alert(Alert.AlertType.INFORMATION);
@@ -198,6 +211,10 @@ public class NewAccount extends Stage {
                textFieldUsername.clear();
                textFieldPassword.clear();
                textFieldConfirmPassword.clear();
+               nameAlert.setVisible(false);
+               usernameAlert.setVisible(false);
+               passwordAlert.setVisible(false);
+               confirmPasswordAlert.setVisible(false);
 
            }
        });
