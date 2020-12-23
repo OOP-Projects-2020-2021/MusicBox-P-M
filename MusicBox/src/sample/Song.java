@@ -4,21 +4,19 @@ public class Song {
     private Artist artist;
     private String title;
     private String albumName;
-    private int minutes;
-    private int seconds;
+    private String minutes;
+    private String seconds;
     private String genre;
-    private String fileName;
     private String filePath;
 
 
-    public Song(Artist artistName,String title, String albumName, int minutes, int seconds, String genre, String fileName, String filePath) {
+    public Song(Artist artistName,String title, String albumName, String minutes, String seconds, String genre, String filePath) {
         this.title = title;
         this.artist=artistName;
         this.albumName = albumName;
         this.minutes = minutes;
         this.seconds = seconds;
         this.genre = genre;
-        this.fileName = fileName;
         this.filePath = filePath;
     }
 
@@ -38,11 +36,11 @@ public class Song {
         this.title = title;
     }
 
-    public int getMinutes() {
+    public String getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
+    public void setMinutes(String minutes) {
         this.minutes = minutes;
     }
 
@@ -54,11 +52,11 @@ public class Song {
         this.albumName = albumName;
     }
 
-    public int getSeconds() {
+    public String getSeconds() {
         return seconds;
     }
 
-    public void setSeconds(int seconds) {
+    public void setSeconds(String seconds) {
         this.seconds = seconds;
     }
 
@@ -68,14 +66,6 @@ public class Song {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 
     public String getFilePath() {

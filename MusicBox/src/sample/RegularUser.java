@@ -1,6 +1,11 @@
 package sample;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +23,7 @@ public class RegularUser extends User implements MusicManager<Song> {
         this.nrOfSongs=nrOfSongs;
         this.nrOfPlaylists=nrOfPlaylists;
         this.nrOfArtists=nrOfArtists;
-
+        userLibrary = new UserLibrary();
     }
     public Set<Artist> getListOfArtists() {
         return listOfArtists;
@@ -57,4 +62,24 @@ public class RegularUser extends User implements MusicManager<Song> {
 
     }
 
+    public UserLibrary getUserSongs(String filepath, HashMap<String, Song> listOfSongs)
+    {
+        for(int i=0;i<nrOfSongs;i++)
+        {
+            try{
+                BufferedReader in = new BufferedReader(
+                        new FileReader(filepath));
+                String line = in.readLine();   //skip first line
+                while ((line = in.readLine())!= null) {
+                    userLibrary.userLibrarySongs.put(line, listOfSongs.get(line));
+                    //System.out.println(userLibrary.userLibrarySongs.get(line).getTitle());
+                }
+            }
+            catch (IOException e) {
+                System.out.println("File Read Error");
+            }
+
+        }
+        return userLibrary;
+    }
 }
