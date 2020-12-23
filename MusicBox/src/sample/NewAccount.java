@@ -135,6 +135,16 @@ public class NewAccount extends Stage {
                                System.out.println("An error occurred.");
                                e.printStackTrace();
                            }
+                           try {
+                               FileWriter myWriter = new FileWriter(username+".txt", true);
+                               myWriter.write("0 0 0\n");
+                               myWriter.close();
+
+                           } catch (IOException e) {
+                               System.out.println("Error!");
+                               e.printStackTrace();
+                           }
+
                            if(existingUser==0) {
                                try {
                                    FileWriter myWriter = new FileWriter("users.txt", true);
@@ -168,7 +178,7 @@ public class NewAccount extends Stage {
 
                            try {
                                FileWriter myWriter = new FileWriter(username+".txt", true);
-                               myWriter.write("0,0,0\n");
+                               myWriter.write("0 0 0\n");
                                myWriter.close();
 
                            } catch (IOException e) {

@@ -15,10 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Login page for existing users
@@ -116,12 +114,21 @@ public class Login extends Stage {
                                 {
                                     if(userInfo[3].equals("0"))
                                     {
-                                        RegularUser user = new RegularUser(userInfo[1],userInfo[2],userInfo[0],"",0);
+
+                                        Scanner scanner=new Scanner(new File(textFieldUsername.getText()+".txt"));
+                                        int nrOfSongs = scanner.nextInt();
+                                        int nrOfPlaylists=scanner.nextInt();
+                                        int nrOfArtists=scanner.nextInt();
+                                        RegularUser user = new RegularUser(userInfo[1],userInfo[2],userInfo[0],"",0,nrOfSongs,nrOfPlaylists,nrOfArtists);
                                         new RegularUserProfile(user);
                                     }
                                     else {
                                         if (userInfo[3].equals("1")) {
-                                            Artist artist = new Artist(userInfo[1], userInfo[2], userInfo[0], "", 0, 0, 0, 1);
+                                            Scanner scanner=new Scanner(new File(textFieldUsername.getText()+".txt"));
+                                            int nrOfAlbums = scanner.nextInt();
+                                            int nrOfSongs=scanner.nextInt();
+                                            int nrOfSubscribers=scanner.nextInt();
+                                            Artist artist = new Artist(userInfo[1], userInfo[2], userInfo[0], "", nrOfAlbums, nrOfSongs, nrOfSubscribers, 1);
                                             new ArtistProfile(artist);
                                         }
                                     }
