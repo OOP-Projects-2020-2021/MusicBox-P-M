@@ -9,7 +9,6 @@ public class Song {
     private String genre;
     private String filePath;
 
-
     public Song(Artist artistName,String title, String albumName, String minutes, String seconds, String genre, String filePath) {
         this.title = title;
         this.artist=artistName;

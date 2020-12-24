@@ -1,12 +1,18 @@
 package sample;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
@@ -114,8 +120,12 @@ public class RegularUserProfile extends Stage{
         for (String keys : library.userLibrarySongs.keySet())
         {
             //System.out.println(keys + ":"+ library.userLibrarySongs.get(keys));
-            Text text1 = new Text(library.userLibrarySongs.get(keys).getTitle());
-            textDesign(text1,15);
+            Button text1 = new Button(library.userLibrarySongs.get(keys).getTitle());
+            //textDesign(text1,15);
+
+
+            text1.setStyle("-fx-background-color: transparent;-fx-font: 13 arial; ");
+            text1.setTextFill(Color.DARKBLUE);
             Text text2 = new Text(library.userLibrarySongs.get(keys).getArtistName().getName());
             Text text3 = new Text(library.userLibrarySongs.get(keys).getAlbumName());
             Text text4 = new Text("            " + library.userLibrarySongs.get(keys).getMinutes()+":"+library.userLibrarySongs.get(keys).getSeconds());
@@ -125,6 +135,24 @@ public class RegularUserProfile extends Stage{
             gridPane.add(text3,3,position);
             gridPane.add(text4,4,position);
             position++;
+
+            text1.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+
+                    String path = library.userLibrarySongs.get(keys).getTitle()+".mp3";
+                    Media media = new Media(new File(path).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    MediaView mediaView = new MediaView(mediaPlayer);
+                    //gridPane.add(mediaView,0,10);
+                   // mediaPlayer.setAutoPlay(true);
+                    mediaPlayer.play();
+
+
+                    new AudioPlayer(mediaPlayer,mediaView,library.userLibrarySongs.get(keys));
+
+                }
+            });
         }
 
         this.setScene(scene);
