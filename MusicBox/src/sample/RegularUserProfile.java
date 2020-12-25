@@ -36,12 +36,17 @@ public class RegularUserProfile extends Stage{
     ArrayList<Text> albumsTitles = new ArrayList<>();
     ArrayList<Text> duration = new ArrayList<>();
     ArrayList<HBox> hBoxes = new ArrayList<>();
+    GridPane gridPane;
+    Text nrOfPlaylists;
+    Text nrOfSongs;
+    Text nrOfArtists;
     RegularUserProfile(RegularUser user)
     {
         this.setWidth(400);
         this.setHeight(600);
         this.setTitle(user.getUsername() + " Profile");
-        GridPane gridPane = new GridPane();
+        user.setRegularUserProfile(this);
+        gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(5);
@@ -57,11 +62,13 @@ public class RegularUserProfile extends Stage{
         textDesign(title,10);
         gridPane.add(name, 2, 0);
         gridPane.add(title,3,0);
-
-
-        Text nrOfSongs=new Text("Songs: "+String.valueOf(user.getNrOfSongs()));
-        Text nrOfPlaylists=new Text("Playlists: "+String.valueOf(user.getNrOfPlaylists()));
-        Text nrOfArtists=new Text("Artists: "+String.valueOf(user.getNrOfArtists()));
+        Button exploreButton=new Button("Explore");
+        exploreButton.setTextFill(Color.WHITE);
+        exploreButton.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+        gridPane.add(exploreButton,2,1);
+        nrOfSongs=new Text("Songs: "+String.valueOf(user.getNrOfSongs()));
+        nrOfPlaylists=new Text("Playlists: "+String.valueOf(user.getNrOfPlaylists()));
+        nrOfArtists=new Text("Artists: "+String.valueOf(user.getNrOfArtists()));
         textDesign(nrOfSongs,15);
         textDesign(nrOfPlaylists,15);
         textDesign(nrOfArtists,15);
@@ -127,9 +134,6 @@ public class RegularUserProfile extends Stage{
         gridPane.add(header4,4,6);
 
         UserLibrary library = user.getUserSongs(user.getUsername()+".txt", (HashMap<String, Song>) listOfSongs);
-
-
-
         int position = 8;
         song = 0;
         for (String keys : library.userLibrarySongs.keySet()) {
@@ -194,7 +198,6 @@ public class RegularUserProfile extends Stage{
                         gridPane.getChildren().remove(artistName);
                         gridPane.getChildren().remove(durationSong);
 
-
                         MusicManager.removeSong(newSong.getText(), library);
                         user.setNrOfSongs(user.getNrOfSongs()-1);
                         removeButtons.remove(removeSong);
@@ -220,6 +223,12 @@ public class RegularUserProfile extends Stage{
             });
             song++;
         }
+        exploreButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new ExplorePage((HashMap<String, Song>) listOfSongs,user,user.getRegularUserProfile());
+            }
+        });
 
         this.setScene(scene);
         this.show();
@@ -244,7 +253,7 @@ public class RegularUserProfile extends Stage{
         }
         return null;
     }
-    public void deleteAll(GridPane gridpane, int nrSongs)
+    public  void deleteAll(GridPane gridpane, int nrSongs)
     {
         for(int i=0;i<nrSongs;i++)
         {

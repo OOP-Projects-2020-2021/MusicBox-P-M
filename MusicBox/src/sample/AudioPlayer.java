@@ -23,7 +23,7 @@ import javafx.stage.StageStyle;
 
 public class AudioPlayer extends Stage {
     AudioPlayer(MediaPlayer mediaPlayer,MediaView mediaView, Song song){
-        this.setWidth(400);
+        this.setWidth(500);
         this.setHeight(200);
         Text title=new Text("Playing: "+song.getTitle());
         textDesign(title,30);

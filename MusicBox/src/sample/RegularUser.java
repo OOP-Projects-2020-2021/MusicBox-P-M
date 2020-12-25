@@ -16,7 +16,7 @@ public class RegularUser extends User implements MusicManager<Song> {
     private int nrOfSongs;
     private int nrOfPlaylists;
     private int nrOfArtists;
-
+    private RegularUserProfile regularUserProfile;
     public RegularUser(String username,String password, String name, String imagePath,int type,int nrOfSongs,int nrOfPlaylists,int nrOfArtists)
     {
         super(username,password,name,imagePath,type);
@@ -57,8 +57,26 @@ public class RegularUser extends User implements MusicManager<Song> {
         this.nrOfArtists = nrOfArtists;
     }
 
+    public RegularUserProfile getRegularUserProfile() {
+        return regularUserProfile;
+    }
+
+    public void setRegularUserProfile(RegularUserProfile regularUserProfile) {
+        this.regularUserProfile = regularUserProfile;
+    }
+
+    public UserLibrary getUserLibrary() {
+        return userLibrary;
+    }
+
+    public void setUserLibrary(UserLibrary userLibrary) {
+        this.userLibrary = userLibrary;
+    }
+
     @Override
     public  void addSong(Song song) {
+        userLibrary.userLibrarySongs.put(song.getTitle(),song);
+        setNrOfSongs(getNrOfSongs()+1);
 
     }
 
