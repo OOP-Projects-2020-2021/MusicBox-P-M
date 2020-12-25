@@ -10,6 +10,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -26,7 +27,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+
 public class RegularUserProfile extends Stage{
+    int song;
+    ArrayList<Button> removeButtons = new ArrayList<>();
+    ArrayList<Button> songTitles = new ArrayList<Button>();
+    ArrayList<Text> artistNames = new ArrayList<>();
+    ArrayList<Text> albumsTitles = new ArrayList<>();
+    ArrayList<Text> duration = new ArrayList<>();
+    ArrayList<HBox> hBoxes = new ArrayList<>();
     RegularUserProfile(RegularUser user)
     {
         this.setWidth(400);
@@ -44,10 +53,11 @@ public class RegularUserProfile extends Stage{
         gridPane.add(imageView,0,0);
         Text name=new Text(user.getName());
         Text title=new Text("'s Music Box");
-        textDesign(name,20);
+        textDesign(name,15);
         textDesign(title,10);
         gridPane.add(name, 2, 0);
         gridPane.add(title,3,0);
+
 
         Text nrOfSongs=new Text("Songs: "+String.valueOf(user.getNrOfSongs()));
         Text nrOfPlaylists=new Text("Playlists: "+String.valueOf(user.getNrOfPlaylists()));
@@ -110,49 +120,105 @@ public class RegularUserProfile extends Stage{
         Text header4 = new Text("Duration");
         textDesign(header4,16);
 
+
         gridPane.add(header1,0,6);
         gridPane.add(header2,2,6);
         gridPane.add(header3,3,6);
         gridPane.add(header4,4,6);
 
         UserLibrary library = user.getUserSongs(user.getUsername()+".txt", (HashMap<String, Song>) listOfSongs);
+
+
+
         int position = 8;
-        for (String keys : library.userLibrarySongs.keySet())
-        {
-            //System.out.println(keys + ":"+ library.userLibrarySongs.get(keys));
-            Button text1 = new Button(library.userLibrarySongs.get(keys).getTitle());
-            //textDesign(text1,15);
+        song = 0;
+        for (String keys : library.userLibrarySongs.keySet()) {
+
+            Button removeSong = new Button("-");
+            Button newSong = new Button(library.userLibrarySongs.get(keys).getTitle());
+            songTitles.add(newSong);
+            removeButtons.add(removeSong);
+            HBox newHbox = new HBox(removeSong,newSong);
+            hBoxes.add(newHbox);
+
+            Text artistName = new Text(library.userLibrarySongs.get(keys).getArtistName().getName());
+            Text albumTitle = new Text(library.userLibrarySongs.get(keys).getAlbumName());
+            Text durationSong = new Text("            " + library.userLibrarySongs.get(keys).getMinutes() + ":" + library.userLibrarySongs.get(keys).getSeconds());
+            artistNames.add(artistName);
+            albumsTitles.add(albumTitle);
+            duration.add(durationSong);
+
+            songTitles.get(song).setStyle("-fx-background-color: transparent;-fx-font: 13 arial; ");
+            removeButtons.get(song).setTextFill(Color.WHITE);
+            removeButtons.get(song).setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+            songTitles.get(song).setTextFill(Color.DARKBLUE);
 
 
-            text1.setStyle("-fx-background-color: transparent;-fx-font: 13 arial; ");
-            text1.setTextFill(Color.DARKBLUE);
-            Text text2 = new Text(library.userLibrarySongs.get(keys).getArtistName().getName());
-            Text text3 = new Text(library.userLibrarySongs.get(keys).getAlbumName());
-            Text text4 = new Text("            " + library.userLibrarySongs.get(keys).getMinutes()+":"+library.userLibrarySongs.get(keys).getSeconds());
-
-            gridPane.add(text1,0,position);
-            gridPane.add(text2,2,position);
-            gridPane.add(text3,3,position);
-            gridPane.add(text4,4,position);
+            gridPane.add(hBoxes.get(song), 0, position);
+            //gridPane.add(removeButtons.get(song),0,position);
+            //gridPane.add(songTitles.get(song),2,position);
+            gridPane.add(artistNames.get(song), 2, position);
+            gridPane.add(albumsTitles.get(song), 3, position);
+            gridPane.add(duration.get(song), 4, position);
             position++;
 
-            text1.setOnAction(new EventHandler<ActionEvent>() {
+
+            newSong.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
 
-                    String path = library.userLibrarySongs.get(keys).getTitle()+".mp3";
+                    String path = library.userLibrarySongs.get(keys).getTitle() + ".mp3";
                     Media media = new Media(new File(path).toURI().toString());
                     MediaPlayer mediaPlayer = new MediaPlayer(media);
                     MediaView mediaView = new MediaView(mediaPlayer);
                     //gridPane.add(mediaView,0,10);
-                   // mediaPlayer.setAutoPlay(true);
+                    // mediaPlayer.setAutoPlay(true);
                     mediaPlayer.play();
 
 
-                    new AudioPlayer(mediaPlayer,mediaView,library.userLibrarySongs.get(keys));
+                    new AudioPlayer(mediaPlayer, mediaView, library.userLibrarySongs.get(keys));
 
                 }
             });
+
+            removeSong.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                        removeSong.setVisible(false);
+                        newSong.setVisible(false);
+                        newHbox.setVisible(false);
+                        gridPane.getChildren().remove(removeSong);
+                        gridPane.getChildren().remove(newSong);
+                        gridPane.getChildren().remove(newHbox);
+                        gridPane.getChildren().remove(albumTitle);
+                        gridPane.getChildren().remove(artistName);
+                        gridPane.getChildren().remove(durationSong);
+
+
+                        MusicManager.removeSong(newSong.getText(), library);
+                        user.setNrOfSongs(user.getNrOfSongs()-1);
+                        removeButtons.remove(removeSong);
+                        songTitles.remove(newSong);
+                        albumsTitles.remove(albumTitle);
+                        artistNames.remove(artistName);
+                        duration.remove(durationSong);
+
+                        deleteAll(gridPane,user.getNrOfSongs());
+
+                    int pos = 8;
+                    for(int j=0;j<user.getNrOfSongs();j++)
+                    {
+                        HBox box= new HBox(removeButtons.get(j),songTitles.get(j));
+                        gridPane.add(box, 0, pos);
+                        gridPane.add(artistNames.get(j), 2, pos);
+                        gridPane.add(albumsTitles.get(j), 3, pos);
+                        gridPane.add(duration.get(j), 4, pos);
+                        pos++;
+                    }
+                    nrOfSongs.setText("Songs: "+String.valueOf(user.getNrOfSongs()));
+                }
+            });
+            song++;
         }
 
         this.setScene(scene);
@@ -178,4 +244,17 @@ public class RegularUserProfile extends Stage{
         }
         return null;
     }
+    public void deleteAll(GridPane gridpane, int nrSongs)
+    {
+        for(int i=0;i<nrSongs;i++)
+        {
+            gridpane.getChildren().remove(removeButtons.get(i));
+            gridpane.getChildren().remove(songTitles.get(i));
+            gridpane.getChildren().remove(hBoxes.get(i));
+            gridpane.getChildren().remove(artistNames.get(i));
+            gridpane.getChildren().remove(albumsTitles.get(i));
+            gridpane.getChildren().remove(duration.get(i));
+        }
+    }
+
 }
