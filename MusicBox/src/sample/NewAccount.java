@@ -101,7 +101,7 @@ public class NewAccount extends Stage {
        clearButton.setEffect(shadow);
        createButton.setEffect(shadow);
        clearButton.setTextFill(Color.WHITE);
-       gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #786391, #e5cff3);-fx-background-radius: 90;");
+       gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #63dafa, #e3b0dc);");
        Scene scene = new Scene(gridPane);
        this.setScene(scene);
        this.show();
