@@ -94,94 +94,124 @@ public class ExplorePage extends Stage {
                                 } else {
                                     btn.setOnAction(event -> {
                                         Map.Entry<String, Song> song = getTableView().getItems().get(getIndex());
-                                        regularUser.addSong(song.getValue());
-                                        Button removeSong=new Button("-");
-                                        removeSong.setTextFill(Color.WHITE);
-                                        removeSong.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
-                                        Button songButton=new Button(song.getValue().getTitle());
-                                        Text artistName=new Text(song.getValue().getArtistName().getName());
-                                        Text albumName=new Text(song.getValue().getAlbumName());
-                                        Text duration=new Text("            " + song.getValue().getMinutes()+":"+song.getValue().getSeconds());
-                                        songButton.setStyle("-fx-background-color: transparent;-fx-font: 13 arial; ");
-                                        songButton.setTextFill(Color.DARKBLUE);
-                                        HBox hBox=new HBox(removeSong,songButton);
-                                        System.out.println(regularUser.getNrOfSongs());
-                                        if(regularUser.getNrOfSongs()-1==0) {
-                                            regularUserProfile.gridPane.add(hBox, 0,  8);
-                                            regularUserProfile.gridPane.add(artistName, 2,  8);
-                                            regularUserProfile.gridPane.add(albumName, 3, 8);
-                                            regularUserProfile.gridPane.add(duration, 4,  8);
-                                        }else{
-                                            regularUserProfile.gridPane.add(hBox, 0, regularUser.getNrOfSongs() + 8);
-                                            regularUserProfile.gridPane.add(artistName, 2, regularUser.getNrOfSongs() + 8);
-                                            regularUserProfile.gridPane.add(albumName, 3, regularUser.getNrOfSongs() + 8);
-                                            regularUserProfile.gridPane.add(duration, 4, regularUser.getNrOfSongs() + 8);
+                                        if(!regularUser.getUserLibrary().userLibrarySongs.containsKey(song.getKey()))
+                                        {
+                                            int foundArtist=0;
+                                            for(Song userSongs:regularUser.getUserLibrary().userLibrarySongs.values())
+                                            {
+                                                if(userSongs.getArtistName().getName().equals(song.getValue().getArtistName().getName()))
+                                                {
+                                                    foundArtist = 1;
+                                                }
+                                            }
+                                            if(foundArtist==0)
+                                            {
+                                                regularUser.setNrOfArtists(regularUser.getNrOfArtists()+1);
+                                                regularUserProfile.nrOfArtists.setText("Artists: "+String.valueOf(regularUser.getNrOfArtists()));
+                                            }
+                                            regularUser.addSong(song.getValue());
+                                            Button removeSong = new Button("-");
+                                            removeSong.setTextFill(Color.WHITE);
+                                            removeSong.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+                                            Button songButton = new Button(song.getValue().getTitle());
+                                            Text artistName = new Text(song.getValue().getArtistName().getName());
+                                            Text albumName = new Text(song.getValue().getAlbumName());
+                                            Text duration = new Text("            " + song.getValue().getMinutes() + ":" + song.getValue().getSeconds());
+                                            songButton.setStyle("-fx-background-color: transparent;-fx-font: 13 arial; ");
+                                            songButton.setTextFill(Color.DARKBLUE);
+                                            HBox hBox = new HBox(removeSong, songButton);
+                                            //System.out.println(regularUser.getNrOfSongs());
+                                            if (regularUser.getNrOfSongs() - 1 == 0) {
+                                                regularUserProfile.gridPane.add(hBox, 0, 8);
+                                                regularUserProfile.gridPane.add(artistName, 2, 8);
+                                                regularUserProfile.gridPane.add(albumName, 3, 8);
+                                                regularUserProfile.gridPane.add(duration, 4, 8);
+                                            } else {
+                                                regularUserProfile.gridPane.add(hBox, 0, regularUser.getNrOfSongs() + 7);
+                                                regularUserProfile.gridPane.add(artistName, 2, regularUser.getNrOfSongs() + 7);
+                                                regularUserProfile.gridPane.add(albumName, 3, regularUser.getNrOfSongs() + 7);
+                                                regularUserProfile.gridPane.add(duration, 4, regularUser.getNrOfSongs() + 7);
+                                            }
+                                            regularUserProfile.removeButtons.add(removeSong);
+                                            regularUserProfile.songTitles.add(songButton);
+                                            regularUserProfile.artistNames.add(artistName);
+                                            regularUserProfile.albumsTitles.add(albumName);
+                                            regularUserProfile.duration.add(duration);
+                                            regularUserProfile.nrOfSongs.setText("Songs: " + String.valueOf(regularUser.getNrOfSongs()));
+                                            songButton.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override
+                                                public void handle(ActionEvent t) {
+
+                                                    String path = songButton.getText() + ".mp3";
+                                                    Media media = new Media(new File(path).toURI().toString());
+                                                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                                                    MediaView mediaView = new MediaView(mediaPlayer);
+                                                    mediaPlayer.play();
+                                                    new AudioPlayer(mediaPlayer, mediaView, song.getValue());
+
+                                                }
+                                            });
+                                            removeSong.setOnAction(new EventHandler<ActionEvent>() {
+                                                @Override
+                                                public void handle(ActionEvent t) {
+                                                    removeSong.setVisible(false);
+                                                    songButton.setVisible(false);
+                                                    hBox.setVisible(false);
+                                                    regularUserProfile.gridPane.getChildren().remove(removeSong);
+                                                    regularUserProfile.gridPane.getChildren().remove(songButton);
+                                                    regularUserProfile.gridPane.getChildren().remove(hBox);
+                                                    regularUserProfile.gridPane.getChildren().remove(albumName);
+                                                    regularUserProfile.gridPane.getChildren().remove(artistName);
+                                                    regularUserProfile.gridPane.getChildren().remove(duration);
+
+                                                    String artist=regularUser.getUserLibrary().userLibrarySongs.get(songButton.getText()).getArtistName().getName();
+                                                    MusicManager.removeSong(songButton.getText(), regularUser.getUserLibrary());
+                                                    regularUser.setNrOfSongs(regularUser.getNrOfSongs() - 1);
+                                                    regularUserProfile.removeButtons.remove(removeSong);
+                                                    regularUserProfile.songTitles.remove(songButton);
+                                                    regularUserProfile.albumsTitles.remove(albumName);
+                                                    regularUserProfile.artistNames.remove(artistName);
+                                                    regularUserProfile.duration.remove(duration);
+                                                    regularUserProfile.hBoxes.remove(hBox);
+
+                                                    for (int i = 0; i < regularUser.getNrOfSongs(); i++) {
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.removeButtons.get(i));
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.songTitles.get(i));
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.hBoxes.get(i));
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.artistNames.get(i));
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.albumsTitles.get(i));
+                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.duration.get(i));
+                                                    }
+
+                                                    int pos = 8;
+                                                    for (int j = 0; j < regularUser.getNrOfSongs(); j++) {
+                                                        HBox box = new HBox(regularUserProfile.removeButtons.get(j), regularUserProfile.songTitles.get(j));
+                                                        regularUserProfile.gridPane.add(box, 0, pos);
+                                                        regularUserProfile.gridPane.add(regularUserProfile.artistNames.get(j), 2, pos);
+                                                        regularUserProfile.gridPane.add(regularUserProfile.albumsTitles.get(j), 3, pos);
+                                                        regularUserProfile.gridPane.add(regularUserProfile.duration.get(j), 4, pos);
+                                                        pos++;
+                                                    }
+
+                                                    int foundArtist=0;
+                                                    for(Song userSongs:regularUser.getUserLibrary().userLibrarySongs.values())
+                                                    {
+                                                        if(userSongs.getArtistName().getName().equals(artist))
+                                                        {
+                                                            foundArtist = 1;
+                                                        }
+                                                    }
+                                                    if(foundArtist==0)
+                                                    {
+                                                        regularUser.setNrOfArtists(regularUser.getNrOfArtists()-1);
+                                                        regularUserProfile.nrOfArtists.setText("Artists: "+String.valueOf(regularUser.getNrOfArtists()));
+                                                    }
+
+                                                    regularUserProfile.nrOfSongs.setText("Songs: " + String.valueOf(regularUser.getNrOfSongs()));
+                                                }
+
+                                            });
                                         }
-                                        regularUserProfile.removeButtons.add(removeSong);
-                                        regularUserProfile.songTitles.add(songButton);
-                                        regularUserProfile.artistNames.add(artistName);
-                                        regularUserProfile.albumsTitles.add(albumName);
-                                        regularUserProfile.duration.add(duration);
-                                        regularUserProfile.nrOfSongs.setText("Songs: "+String.valueOf(regularUser.getNrOfSongs()));
-                                        songButton.setOnAction(new EventHandler<ActionEvent>() {
-                                            @Override
-                                            public void handle(ActionEvent t) {
-
-                                                String path = songButton.getText()+ ".mp3";
-                                                Media media = new Media(new File(path).toURI().toString());
-                                                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                                                MediaView mediaView = new MediaView(mediaPlayer);
-                                                mediaPlayer.play();
-                                                new AudioPlayer(mediaPlayer, mediaView, song.getValue());
-
-                                            }
-                                        });
-                                        removeSong.setOnAction(new EventHandler<ActionEvent>() {
-                                            @Override
-                                            public void handle(ActionEvent t) {
-                                                removeSong.setVisible(false);
-                                                songButton.setVisible(false);
-                                                hBox.setVisible(false);
-                                                regularUserProfile.gridPane.getChildren().remove(removeSong);
-                                                regularUserProfile.gridPane.getChildren().remove(songButton);
-                                                regularUserProfile.gridPane.getChildren().remove(hBox);
-                                                regularUserProfile.gridPane.getChildren().remove(albumName);
-                                                regularUserProfile.gridPane.getChildren().remove(artistName);
-                                               regularUserProfile.gridPane.getChildren().remove(duration);
-
-                                                MusicManager.removeSong(songButton.getText(), regularUser.getUserLibrary());
-                                                regularUser.setNrOfSongs(regularUser.getNrOfSongs()-1);
-                                                regularUserProfile.removeButtons.remove(removeSong);
-                                                regularUserProfile.songTitles.remove(songButton);
-                                                regularUserProfile.albumsTitles.remove(albumName);
-                                                regularUserProfile.artistNames.remove(artistName);
-                                                regularUserProfile.duration.remove(duration);
-                                                regularUserProfile.hBoxes.remove(hBox);
-
-                                                for(int i=0;i<regularUser.getNrOfSongs();i++)
-                                                {
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.removeButtons.get(i));
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.songTitles.get(i));
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.hBoxes.get(i));
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.artistNames.get(i));
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.albumsTitles.get(i));
-                                                    regularUserProfile.gridPane.getChildren().remove(regularUserProfile.duration.get(i));
-                                                }
-
-                                                int pos = 8;
-                                                for(int j=0;j<regularUser.getNrOfSongs();j++)
-                                                {
-                                                    HBox box= new HBox(regularUserProfile.removeButtons.get(j),regularUserProfile.songTitles.get(j));
-                                                    regularUserProfile.gridPane.add(box, 0, pos);
-                                                    regularUserProfile.gridPane.add(regularUserProfile.artistNames.get(j), 2, pos);
-                                                    regularUserProfile.gridPane.add(regularUserProfile.albumsTitles.get(j), 3, pos);
-                                                    regularUserProfile.gridPane.add(regularUserProfile.duration.get(j), 4, pos);
-                                                    pos++;
-                                                }
-                                                regularUserProfile.nrOfSongs.setText("Songs: "+String.valueOf(regularUser.getNrOfSongs()));
-                                            }
-
-                                        });
 
                                     });
                                     setGraphic(btn);

@@ -21,10 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
@@ -73,11 +70,18 @@ public class RegularUserProfile extends Stage{
         textDesign(nrOfPlaylists,15);
         textDesign(nrOfArtists,15);
 
+        Button logout = new Button("Logout");
+        logout.setTextFill(Color.WHITE);
+        logout.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+        gridPane.add(logout,3,1);
+
         gridPane.add(nrOfSongs, 0, 1);
-        gridPane.add(nrOfPlaylists,0,2);
-        gridPane.add(nrOfArtists,0,3);
+        gridPane.add(nrOfPlaylists,0,3);
+        nrOfPlaylists.setVisible(false);
+        gridPane.add(nrOfArtists,0,2);
         gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #63dafa, #e3b0dc);");
         Scene scene = new Scene(gridPane);
+
 
         Set<Artist> listOfArtists = new HashSet<Artist>();
         try {
@@ -101,7 +105,9 @@ public class RegularUserProfile extends Stage{
             System.out.println("File Read Error");
         }
 
+
         Map<String, Song> listOfSongs = new HashMap<String, Song>();
+
         try{
             BufferedReader in = new BufferedReader(
                     new FileReader("songs.txt"));
@@ -111,6 +117,24 @@ public class RegularUserProfile extends Stage{
                 Artist artist = findSongArtist((HashSet<Artist>) listOfArtists,songInfo[0]);
                 Song song = new Song(artist,songInfo[1],songInfo[2],songInfo[3],songInfo[4],songInfo[5],songInfo[1]+".mp3");
                 listOfSongs.put(songInfo[1],song);
+            }
+
+        }
+        catch (IOException e) {
+            System.out.println("File Read Error");
+        }
+
+        Map<String, Song> listOfSongs1 = new HashMap<String, Song>();
+
+        try{
+            BufferedReader in = new BufferedReader(
+                    new FileReader("songs1.txt"));
+            String line;
+            while ((line = in.readLine())!= null) {
+                String[] songInfo = line.split(",");
+                Artist artist = findSongArtist((HashSet<Artist>) listOfArtists,songInfo[0]);
+                Song song = new Song(artist,songInfo[1],songInfo[2],songInfo[3],songInfo[4],songInfo[5],songInfo[1]+".mp3");
+                listOfSongs1.put(songInfo[1],song);
             }
 
         }
@@ -218,15 +242,50 @@ public class RegularUserProfile extends Stage{
                         gridPane.add(duration.get(j), 4, pos);
                         pos++;
                     }
+
+                    int foundArtist=0;
+                    for(Song userSongs:library.userLibrarySongs.values())
+                    {
+                        if(userSongs.getArtistName().getName().equals(artistName.getText()))
+                        {
+                            foundArtist = 1;
+                        }
+                    }
+                    if(foundArtist==0)
+                    {
+                        user.setNrOfArtists(user.getNrOfArtists()-1);
+                        nrOfArtists.setText("Artists: "+String.valueOf(user.getNrOfArtists()));
+                    }
+
                     nrOfSongs.setText("Songs: "+String.valueOf(user.getNrOfSongs()));
                 }
             });
             song++;
         }
+
         exploreButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                new ExplorePage((HashMap<String, Song>) listOfSongs,user,user.getRegularUserProfile());
+                new ExplorePage((HashMap<String, Song>) listOfSongs1,user,user.getRegularUserProfile());
+            }
+        });
+
+        logout.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                FileWriter myWriter = null;
+                try {
+                    myWriter = new FileWriter(user.getUsername()+".txt");
+                    myWriter.write(user.getNrOfSongs() + " " + user.getNrOfPlaylists()+" "+user.getNrOfArtists()+"\n");
+                    for(String songTitle: library.userLibrarySongs.keySet()) {
+                        myWriter.write(songTitle + "\n");
+                    }
+                    myWriter.close();
+                    new StartPage();
+                    close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

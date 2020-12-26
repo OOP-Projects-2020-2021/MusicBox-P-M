@@ -5,7 +5,7 @@ public class Artist extends User implements MusicManager<String> {
     private int nrOfSongs;
     private int nrOfSubscribers;
     private ArtistFeed feed;
-    private UserLibrary artistLibrary;
+    private UserLibrary artistLibrary = new UserLibrary();
     public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers, int type)
     {
         super(username,password,name,imagePath,type);
@@ -40,4 +40,15 @@ public class Artist extends User implements MusicManager<String> {
 
     }
 
+    public ArtistFeed getFeed() {
+        return feed;
+    }
+
+    public UserLibrary getArtistLibrary() {
+        return artistLibrary;
+    }
+
+    public void setFeed(ArtistFeed feed) {
+        this.feed = feed;
+    }
 }
