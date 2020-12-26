@@ -13,8 +13,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -29,18 +28,16 @@ import java.util.Map;
 
 public class ExplorePage extends Stage {
     ExplorePage(HashMap<String,Song>songs, RegularUser regularUser, RegularUserProfile regularUserProfile){
-        this.setWidth(410);
+        this.setWidth(650);
         this.setHeight(600);
         this.setTitle("Explore Page");
         ObservableList<Map.Entry<String,Song>> items = FXCollections.observableArrayList(songs.entrySet());
         TableView<Map.Entry<String,Song>> table = new TableView<>(items);
-        table.setEditable(true);
         TableColumn<Map.Entry<String, Song>, String> column1 = new TableColumn<>("Title");
         column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, Song>, String>, ObservableValue<String>>() {
 
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Song>, String> p) {
-                // for second column we use value
                 return new SimpleStringProperty(p.getValue().getKey());
             }
         });
@@ -49,7 +46,6 @@ public class ExplorePage extends Stage {
 
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Song>, String> p) {
-                // for second column we use value
                 return new SimpleStringProperty(p.getValue().getValue().getArtistName().getName());
             }
         });
@@ -59,7 +55,6 @@ public class ExplorePage extends Stage {
 
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Song>, String> p) {
-                // for second column we use value
                 return new SimpleStringProperty(p.getValue().getValue().getAlbumName());
             }
         });
@@ -68,7 +63,6 @@ public class ExplorePage extends Stage {
 
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Song>, String> p) {
-                // for second column we use value
                 return new SimpleStringProperty(p.getValue().getValue().getGenre());
             }
         });
@@ -77,7 +71,6 @@ public class ExplorePage extends Stage {
 
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, Song>, String> p) {
-                // for second column we use value
                 return new SimpleStringProperty(p.getValue().getValue().getMinutes()+":"+p.getValue().getValue().getSeconds());
             }
         });
@@ -89,7 +82,8 @@ public class ExplorePage extends Stage {
                     public TableCell call(final TableColumn<Map.Entry<String, Song>, String> param) {
                         final TableCell<Map.Entry<String, Song>, String> cell = new TableCell<Map.Entry<String, Song>, String>() {
 
-                            final Button btn = new Button("+");
+                           final Button btn = new Button("+");
+
 
                             @Override
                             public void updateItem(String item, boolean empty) {
@@ -234,6 +228,19 @@ public class ExplorePage extends Stage {
         column2.setGraphic(artistName);
         column3.setGraphic(albumName);
         column4.setGraphic(genre);
+
+
+        table.prefHeightProperty().bind(this.heightProperty());
+        table.prefWidthProperty().bind(this.widthProperty());
+        table.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
+        column1.setStyle("-fx-background-color: lightblue;");
+        column2.setStyle("-fx-background-color: lightblue;");
+        column3.setStyle("-fx-background-color: lightblue;");
+        column4.setStyle("-fx-background-color: lightblue;");
+        column5.setStyle("-fx-background-color: lightblue;");
+        actionCol.setStyle("-fx-background-color: lightblue;");
+
+
         Group group=new Group(table,hbox);
         Scene scene = new Scene(group);
         this.setScene(scene);
