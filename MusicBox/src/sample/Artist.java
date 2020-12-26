@@ -1,11 +1,12 @@
 package sample;
 
-public class Artist extends User implements MusicManager<String> {
+public class Artist extends User implements MusicManager<String,Song> {
     private int nrOfAlbums;
     private int nrOfSongs;
     private int nrOfSubscribers;
     private ArtistFeed feed;
     private UserLibrary artistLibrary = new UserLibrary();
+    private ArtistProfile artistProfile;
     public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers, int type)
     {
         super(username,password,name,imagePath,type);
@@ -36,8 +37,9 @@ public class Artist extends User implements MusicManager<String> {
     }
 
     @Override
-    public void addSong(String filePath) {
-
+    public void addSong(String filePath,Song song) {
+        artistLibrary.userLibrarySongs.put(song.getTitle(),song);
+        setNrOfSongs(getNrOfSongs()+1);
     }
 
     public ArtistFeed getFeed() {
@@ -51,4 +53,13 @@ public class Artist extends User implements MusicManager<String> {
     public void setFeed(ArtistFeed feed) {
         this.feed = feed;
     }
+
+    public ArtistProfile getArtistProfile() {
+        return artistProfile;
+    }
+
+    public void setArtistProfile(ArtistProfile artistProfile) {
+        this.artistProfile = artistProfile;
+    }
+
 }

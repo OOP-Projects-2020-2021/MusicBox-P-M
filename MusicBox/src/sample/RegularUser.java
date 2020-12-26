@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RegularUser extends User implements MusicManager<Song> {
+public class RegularUser extends User implements MusicManager<Song,Integer> {
     private Set<Artist> listOfArtists = new HashSet<Artist>();
     private UserLibrary userLibrary;
     private ArrayList<Playlist> listOfPlaylists=new ArrayList<Playlist>();
@@ -74,9 +74,9 @@ public class RegularUser extends User implements MusicManager<Song> {
     }
 
     @Override
-    public  void addSong(Song song) {
+    public  void addSong(Song song,Integer number) {
         userLibrary.userLibrarySongs.put(song.getTitle(),song);
-        setNrOfSongs(getNrOfSongs()+1);
+        setNrOfSongs(getNrOfSongs()+number);
 
     }
 

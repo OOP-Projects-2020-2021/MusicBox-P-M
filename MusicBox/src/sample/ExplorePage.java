@@ -109,7 +109,7 @@ public class ExplorePage extends Stage {
                                                 regularUser.setNrOfArtists(regularUser.getNrOfArtists()+1);
                                                 regularUserProfile.nrOfArtists.setText("Artists: "+String.valueOf(regularUser.getNrOfArtists()));
                                             }
-                                            regularUser.addSong(song.getValue());
+                                            regularUser.addSong(song.getValue(),1);
                                             Button removeSong = new Button("-");
                                             removeSong.setTextFill(Color.WHITE);
                                             removeSong.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");

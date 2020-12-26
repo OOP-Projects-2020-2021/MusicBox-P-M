@@ -31,6 +31,7 @@ public class ArtistProfile extends Stage {
     ArrayList<Text> albumsTitles = new ArrayList<>();
     ArrayList<Text> duration = new ArrayList<>();
     ArrayList<HBox> hBoxes = new ArrayList<>();
+    GridPane gridPane;
     ArtistProfile(Artist artist)
     {
         this.setWidth(400);
@@ -38,8 +39,8 @@ public class ArtistProfile extends Stage {
         this.setTitle(artist.getUsername() + " Profile");
 
 
-       // user.setRegularUserProfile(this);
-        GridPane gridPane = new GridPane();
+       artist.setArtistProfile(this);
+        gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(5);
@@ -73,6 +74,10 @@ public class ArtistProfile extends Stage {
         gridPane.add(nrOfSongs, 0, 1);
         gridPane.add(nrOfAlbums,0,2);
 
+        Button addSong=new Button("Upload");
+       addSong.setTextFill(Color.WHITE);
+       addSong.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+       gridPane.add(addSong,2,1);
 
         Set<Artist> listOfArtists = new HashSet<Artist>();
         try {
@@ -232,12 +237,12 @@ public class ArtistProfile extends Stage {
             });
             song++;
         }
-        /*exploreButton.setOnAction(new EventHandler<ActionEvent>() {
+        addSong.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                new ExplorePage((HashMap<String, Song>) listOfSongs,user,user.getRegularUserProfile());
+                new UploadSong(listOfSongs,artist);
             }
-        });*/
+        });
 
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
