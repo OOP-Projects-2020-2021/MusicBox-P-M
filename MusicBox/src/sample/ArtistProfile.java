@@ -79,6 +79,11 @@ public class ArtistProfile extends Stage {
        addSong.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
        gridPane.add(addSong,2,1);
 
+        Button myFeed=new Button("My Feed");
+        myFeed.setTextFill(Color.WHITE);
+        myFeed.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+        gridPane.add(myFeed,4,1);
+
         Set<Artist> listOfArtists = new HashSet<Artist>();
         try {
             BufferedReader in = new BufferedReader(
@@ -241,6 +246,13 @@ public class ArtistProfile extends Stage {
             @Override
             public void handle(ActionEvent t) {
                 new UploadSong(listOfSongs,artist);
+            }
+        });
+
+        myFeed.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new PersonalFeed(artist);
             }
         });
 

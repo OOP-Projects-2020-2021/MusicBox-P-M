@@ -4,7 +4,7 @@ public class Artist extends User implements MusicManager<String,Song> {
     private int nrOfAlbums;
     private int nrOfSongs;
     private int nrOfSubscribers;
-    private ArtistFeed feed;
+    private ArtistFeed feed=new ArtistFeed();
     private UserLibrary artistLibrary = new UserLibrary();
     private ArtistProfile artistProfile;
     public Artist(String username,String password, String name, String imagePath, int nrOfAlbums, int nrOfSongs, int nrOfSubscribers, int type)

@@ -75,6 +75,11 @@ public class RegularUserProfile extends Stage{
         logout.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
         gridPane.add(logout,3,1);
 
+        Button posts = new Button("Posts");
+        posts.setTextFill(Color.WHITE);
+        posts.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+        gridPane.add(posts,4,1);
+
         gridPane.add(nrOfSongs, 0, 1);
         gridPane.add(nrOfPlaylists,0,3);
         nrOfPlaylists.setVisible(false);
@@ -269,6 +274,14 @@ public class RegularUserProfile extends Stage{
                 new ExplorePage((HashMap<String, Song>) listOfSongs1,user,user.getRegularUserProfile());
             }
         });
+
+        posts.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new ExplorePosts();
+            }
+        });
+
 
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
