@@ -2,3 +2,5 @@ Raluca Rusu,rusuraluca,pass10,0
 Taylor Swift,taylorswift,taylor,1
 Harry Styles,harrystyles,harry,1
 Lana Del Rey,lanadelrey,lana,1
+Ileana Pop,ileanapop,ileana,0
+Oana Moisa,oanamoisa,oana,0
