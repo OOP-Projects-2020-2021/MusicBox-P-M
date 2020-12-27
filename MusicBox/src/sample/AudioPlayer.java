@@ -26,7 +26,7 @@ public class AudioPlayer extends Stage {
         this.setWidth(500);
         this.setHeight(200);
         Text title=new Text("Playing: "+song.getTitle());
-        textDesign(title,30);
+        StylingMethods.textStyle(title,30);
         Text artist=new Text(song.getArtistName().getName());
         artist.setStyle("-fx-font: 15 arial;");
         artist.setFill(Color.MIDNIGHTBLUE);
@@ -112,14 +112,6 @@ public class AudioPlayer extends Stage {
         this.setScene(scene);
         this.show();
     }
-    public void textDesign(Text text, int font)
-    {
 
-        text.setFont(Font.font("Arial", FontWeight.BOLD, font));
-        text.setFill(Color.BLACK);
-        text.setStroke(Color.ROYALBLUE);
-        text.setStrokeWidth(0.5);
-        text.setFontSmoothingType(FontSmoothingType.LCD);
-    }
 }
 

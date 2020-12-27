@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public class NewAccount extends Stage {
    NewAccount() {
-
+       this.resizableProperty().setValue(Boolean.FALSE);
        this.setWidth(400);
        this.setHeight(600);
        Text textName = new Text("Name:");
@@ -39,6 +39,7 @@ public class NewAccount extends Stage {
 
        Button createButton = new Button("Create");
        Button clearButton = new Button("Clear");
+       Button backButton = new Button("Back");
 
        RadioButton regularUserType = new RadioButton();
        regularUserType.setText("Regular User");
@@ -62,33 +63,38 @@ public class NewAccount extends Stage {
       confirmPasswordAlert.setStyle("-fx-font: 10 arial; -fx-base: RED;");
       confirmPasswordAlert.setVisible(false);
        GridPane gridPane = new GridPane();
-       gridPane.setPadding(new Insets(10, 10, 10, 10));
+       gridPane.setPadding(new Insets(10, 10, 10, 90));
        gridPane.setVgap(5);
        gridPane.setHgap(5);
        gridPane.setAlignment(Pos.CENTER);
 
+        Text title=new Text("Create Account");
+        StylingMethods.textStyle(title,25);
+        title.setUnderline(true);
+        gridPane.add(title,1,0);
+       gridPane.add(textName, 0, 5);
+       gridPane.add(textFieldName, 1,5 );
+       gridPane.add(nameAlert,2,5);
 
-       gridPane.add(textName, 0, 0);
-       gridPane.add(textFieldName, 1, 0);
-       gridPane.add(nameAlert,2,0);
+       gridPane.add(textUsername, 0, 6);
+       gridPane.add(textFieldUsername, 1, 6);
+       gridPane.add(usernameAlert,2,6);
 
-       gridPane.add(textUsername, 0, 1);
-       gridPane.add(textFieldUsername, 1, 1);
-       gridPane.add(usernameAlert,2,1);
+       gridPane.add(textPassword, 0, 7);
+       gridPane.add(textFieldPassword, 1, 7);
+       gridPane.add(passwordAlert,2,7);
 
-       gridPane.add(textPassword, 0, 2);
-       gridPane.add(textFieldPassword, 1, 2);
-       gridPane.add(passwordAlert,2,2);
+       gridPane.add(textConfirmPassword, 0, 8);
+       gridPane.add(textFieldConfirmPassword, 1, 8);
+       gridPane.add(confirmPasswordAlert,2,8);
 
-       gridPane.add(textConfirmPassword, 0, 3);
-       gridPane.add(textFieldConfirmPassword, 1, 3);
-       gridPane.add(confirmPasswordAlert,2,3);
+       gridPane.add(regularUserType, 0, 9);
+       gridPane.add(artistType, 1, 9);
 
-       gridPane.add(regularUserType, 0, 5);
-       gridPane.add(artistType, 1, 5);
+       gridPane.add(createButton, 1, 13);
+       gridPane.add(clearButton, 1, 16);
+       gridPane.add(backButton,1,19);
 
-       gridPane.add(createButton, 1, 10);
-       gridPane.add(clearButton, 1, 13);
        textFieldName.setPromptText("Name");
        textFieldUsername.setPromptText("Username");
        textFieldPassword.setPromptText("Password");
@@ -101,6 +107,9 @@ public class NewAccount extends Stage {
        clearButton.setEffect(shadow);
        createButton.setEffect(shadow);
        clearButton.setTextFill(Color.WHITE);
+       backButton.setTextFill(Color.WHITE);
+       backButton.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+       backButton.setEffect(shadow);
        gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #63dafa, #e3b0dc);");
        Scene scene = new Scene(gridPane);
        this.setScene(scene);
@@ -211,8 +220,7 @@ public class NewAccount extends Stage {
                        fail.showAndWait();
                    }
                }
-               // new NewAccount();
-           }//end action
+           }
        });
        clearButton.setOnAction(new EventHandler<ActionEvent>() {
            @Override
@@ -226,6 +234,13 @@ public class NewAccount extends Stage {
                passwordAlert.setVisible(false);
                confirmPasswordAlert.setVisible(false);
 
+           }
+       });
+       backButton.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent t) {
+               new StartPage();
+               close();
            }
        });
    }

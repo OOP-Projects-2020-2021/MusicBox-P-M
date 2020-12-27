@@ -34,11 +34,10 @@ public class ArtistProfile extends Stage {
     GridPane gridPane;
     ArtistProfile(Artist artist)
     {
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(400);
         this.setHeight(600);
         this.setTitle(artist.getUsername() + " Profile");
-
-
        artist.setArtistProfile(this);
         gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -52,8 +51,8 @@ public class ArtistProfile extends Stage {
         gridPane.add(imageView,0,0);
         Text name=new Text(artist.getName());
         Text title=new Text("'s Music Box");
-        textDesign(name,15);
-        textDesign(title,10);
+        StylingMethods.textStyle(name,15);
+        StylingMethods.textStyle(title,10);
         gridPane.add(name, 2, 0);
         gridPane.add(title,3,0);
 
@@ -68,8 +67,8 @@ public class ArtistProfile extends Stage {
 
         nrOfSongs=new Text("Songs: "+String.valueOf(artist.getNrOfSongs()));
         nrOfAlbums=new Text("Albums: "+String.valueOf(artist.getNrOfAlbums()));
-        textDesign(nrOfSongs,15);
-        textDesign(nrOfAlbums,15);
+        StylingMethods.textStyle(nrOfSongs,15);
+        StylingMethods.textStyle(nrOfAlbums,15);
 
         gridPane.add(nrOfSongs, 0, 1);
         gridPane.add(nrOfAlbums,0,2);
@@ -130,11 +129,11 @@ public class ArtistProfile extends Stage {
 
 
         Text header1 = new Text("Song Title");
-        textDesign(header1,16);
+        StylingMethods.textStyle(header1,16);
         Text header3 = new Text("Album");
-        textDesign(header3,16);
+        StylingMethods.textStyle(header3,16);
         Text header4 = new Text("Duration");
-        textDesign(header4,16);
+        StylingMethods.textStyle(header4,16);
 
         gridPane.add(header1,0,6);
         gridPane.add(header3,2,6);
@@ -164,8 +163,6 @@ public class ArtistProfile extends Stage {
 
 
             gridPane.add(hBoxes.get(song), 0, position);
-            //gridPane.add(removeButtons.get(song),0,position);
-            //gridPane.add(songTitles.get(song),2,position);
             gridPane.add(albumsTitles.get(song), 2, position);
             gridPane.add(duration.get(song), 3, position);
             position++;
@@ -179,11 +176,7 @@ public class ArtistProfile extends Stage {
                     Media media = new Media(new File(path).toURI().toString());
                     MediaPlayer mediaPlayer = new MediaPlayer(media);
                     MediaView mediaView = new MediaView(mediaPlayer);
-                    //gridPane.add(mediaView,0,10);
-                    // mediaPlayer.setAutoPlay(true);
                     mediaPlayer.play();
-
-
                     new AudioPlayer(mediaPlayer, mediaView, artist.getArtistLibrary().userLibrarySongs.get(keys));
 
                 }
@@ -278,21 +271,15 @@ public class ArtistProfile extends Stage {
                 }
             }
         });
+        this.setOnCloseRequest(evt -> {
+            evt.consume();
+        });
 
         this.setScene(scene);
         this.setTitle(artist.getUsername() + " Profile");
         this.show();
     }
 
-    public void textDesign(Text text, int font)
-    {
-
-        text.setFont(Font.font("Arial", FontWeight.BOLD, font));
-        text.setFill(Color.BLACK);
-        text.setStroke(Color.ROYALBLUE);
-        text.setStrokeWidth(0.5);
-        text.setFontSmoothingType(FontSmoothingType.LCD);
-    }
 
     public Artist findSongArtist(HashSet<Artist> listOfArtists,String name)
     {

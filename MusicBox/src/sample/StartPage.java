@@ -27,6 +27,7 @@ public class StartPage extends Stage {
     HBox hbox = new HBox(loginButton,createButton);
     StartPage() {
 
+       this.resizableProperty().setValue(Boolean.FALSE);
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(100, 0, 30, 0));
         Image image = new Image("background.png");
@@ -38,10 +39,6 @@ public class StartPage extends Stage {
                 BackgroundPosition.CENTER,
                 bSize)));
         Text text = new Text("Welcome to Music Box!");
-
-        //Buttons styling
-        //Creating the inner shadow effect
-        //Creating the drop shadow effect
         DropShadow shadow = new DropShadow();
         shadow.setOffsetY(2.0);
         loginButton.setTextFill(Color.WHITE);
@@ -53,22 +50,13 @@ public class StartPage extends Stage {
 
         hbox.setSpacing(50);
         hbox.setAlignment(Pos.CENTER);
-
-        text.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-        text.setFill(Color.BLACK);
-        text.setStroke(Color.BLUEVIOLET);
-        text.setStrokeWidth(0.5);
-        text.setFontSmoothingType(FontSmoothingType.LCD);
-        //Setting the effect to the text
+        StylingMethods.textStyle(text,30);
         text.setEffect(shadow);
 
         borderPane.setTop(text);
         borderPane.setCenter(hbox);
 
         BorderPane.setAlignment(text,Pos.TOP_CENTER);
-        //borderPane.setStyle("-fx-background-color:transparent");
-        //borderPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #63dafa, #e3b0dc);-fx-background-radius: 90;");
-
         Scene scene = new Scene(borderPane, 400, 600, Color.ALICEBLUE);
         this.setScene(scene);
         this.show();
@@ -79,7 +67,7 @@ public class StartPage extends Stage {
                 close();
                 new Login();
 
-            }//end action
+            }
 
         });
         createButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -87,11 +75,7 @@ public class StartPage extends Stage {
             public void handle(ActionEvent t) {
                 close();
                 new NewAccount();
-            }//end action
+            }
         });
-
-
     }
 }
-
-

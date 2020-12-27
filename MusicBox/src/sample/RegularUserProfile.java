@@ -39,6 +39,7 @@ public class RegularUserProfile extends Stage{
     Text nrOfArtists;
     RegularUserProfile(RegularUser user)
     {
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(400);
         this.setHeight(600);
         this.setTitle(user.getUsername() + " Profile");
@@ -55,8 +56,8 @@ public class RegularUserProfile extends Stage{
         gridPane.add(imageView,0,0);
         Text name=new Text(user.getName());
         Text title=new Text("'s Music Box");
-        textDesign(name,15);
-        textDesign(title,10);
+        StylingMethods.textStyle(name,15);
+        StylingMethods.textStyle(title,10);
         gridPane.add(name, 2, 0);
         gridPane.add(title,3,0);
         Button exploreButton=new Button("Explore");
@@ -66,9 +67,9 @@ public class RegularUserProfile extends Stage{
         nrOfSongs=new Text("Songs: "+String.valueOf(user.getNrOfSongs()));
         nrOfPlaylists=new Text("Playlists: "+String.valueOf(user.getNrOfPlaylists()));
         nrOfArtists=new Text("Artists: "+String.valueOf(user.getNrOfArtists()));
-        textDesign(nrOfSongs,15);
-        textDesign(nrOfPlaylists,15);
-        textDesign(nrOfArtists,15);
+        StylingMethods.textStyle(nrOfSongs,15);
+        StylingMethods.textStyle(nrOfPlaylists,15);
+        StylingMethods.textStyle(nrOfArtists,15);
 
         Button logout = new Button("Logout");
         logout.setTextFill(Color.WHITE);
@@ -148,13 +149,13 @@ public class RegularUserProfile extends Stage{
         }
 
         Text header1 = new Text("Song Title");
-        textDesign(header1,16);
+        StylingMethods.textStyle(header1,16);
         Text header2 = new Text("Artist");
-        textDesign(header2,16);
+        StylingMethods.textStyle(header2,16);
         Text header3 = new Text("Album");
-        textDesign(header3,16);
+        StylingMethods.textStyle(header3,16);
         Text header4 = new Text("Duration");
-        textDesign(header4,16);
+        StylingMethods.textStyle(header4,16);
 
 
         gridPane.add(header1,0,6);
@@ -301,19 +302,13 @@ public class RegularUserProfile extends Stage{
                 }
             }
         });
+       this.setOnCloseRequest(evt -> {
+            evt.consume();
+        });
 
         this.setScene(scene);
         this.show();
 
-    }
-    public void textDesign(Text text, int font)
-    {
-
-        text.setFont(Font.font("Arial", FontWeight.BOLD, font));
-        text.setFill(Color.BLACK);
-        text.setStroke(Color.ROYALBLUE);
-        text.setStrokeWidth(0.5);
-        text.setFontSmoothingType(FontSmoothingType.LCD);
     }
 
     public Artist findSongArtist(HashSet<Artist> listOfArtists,String name)
@@ -337,5 +332,4 @@ public class RegularUserProfile extends Stage{
             gridpane.getChildren().remove(duration.get(i));
         }
     }
-
 }

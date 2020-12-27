@@ -11,8 +11,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -23,6 +24,7 @@ import java.util.Scanner;
  */
 public class Login extends Stage {
     Login() {
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setTitle("Login");
         this.setWidth(400);
         this.setHeight(600);
@@ -38,6 +40,7 @@ public class Login extends Stage {
 
         Button loginButton = new Button("Log in");
         Button clearButton = new Button("Clear");
+        Button backButton = new Button("Back");
 
         //Styling
         DropShadow shadow = new DropShadow();
@@ -48,6 +51,9 @@ public class Login extends Stage {
         loginButton.setEffect(shadow);
         clearButton.setEffect(shadow);
         clearButton.setTextFill(Color.WHITE);
+        backButton.setTextFill(Color.WHITE);
+        backButton.setStyle("-fx-font: 10 arial; -fx-base: #1c1d1d;");
+       backButton.setEffect(shadow);
 
 
         Text usernameAlert=new Text("Name required!");
@@ -58,27 +64,31 @@ public class Login extends Stage {
         passwordAlert.setStyle("-fx-font: 10 arial; -fx-base: red;");
         passwordAlert.setVisible(false);
 
+        Text title=new Text("Music Box Login");
+        title.setUnderline(true);
+        StylingMethods.textStyle(title,25);
 
         GridPane gridPane = new GridPane();
 
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(0, 10, 10, 70));
 
         gridPane.setVgap(5);
         gridPane.setHgap(5);
-
+        gridPane.add(title,1,0);
+        title.setTextAlignment(TextAlignment.CENTER);
         gridPane.setAlignment(Pos.CENTER);
+        gridPane.add(textUsername, 0, 10);
+        gridPane.add(textFieldUsername, 1, 10);
+        gridPane.add(usernameAlert,2,10);
 
+        gridPane.add(textPassword, 0, 11);
+        gridPane.add(textFieldPassword, 1, 11);
+        gridPane.add(passwordAlert,2,11);
 
-        gridPane.add(textUsername, 0, 0);
-        gridPane.add(textFieldUsername, 1, 0);
-        gridPane.add(usernameAlert,2,0);
-
-        gridPane.add(textPassword, 0, 1);
-        gridPane.add(textFieldPassword, 1, 1);
-        gridPane.add(passwordAlert,2,1);
-
-        gridPane.add(loginButton, 0, 10);
-        gridPane.add(clearButton, 1, 10);
+        HBox hBox=new HBox(clearButton,backButton);
+        hBox.setSpacing(15);
+        gridPane.add(loginButton, 0, 20);
+        gridPane.add(hBox,1,20);
         gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #63dafa, #e3b0dc);-fx-background-radius: 90;");
 
         Scene scene = new Scene(gridPane);
@@ -92,6 +102,13 @@ public class Login extends Stage {
                 textFieldPassword.clear();
                 usernameAlert.setVisible(false);
                 passwordAlert.setVisible(false);
+            }
+        });
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new StartPage();
+                close();
             }
         });
 

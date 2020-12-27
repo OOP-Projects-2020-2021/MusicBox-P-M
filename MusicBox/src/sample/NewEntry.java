@@ -22,9 +22,10 @@ import java.io.IOException;
 public class NewEntry extends Stage {
     NewEntry(Artist artist)
     {
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(650);
         this.setHeight(150);
-        this.setTitle(artist.getUsername() + "new post");
+        this.setTitle(artist.getUsername() + " new post");
 
         TextField newPost = new TextField();
         newPost.setPrefSize(600,85);

@@ -28,6 +28,7 @@ import java.util.Map;
 
 public class ExplorePage extends Stage {
     ExplorePage(HashMap<String,Song>songs, RegularUser regularUser, RegularUserProfile regularUserProfile){
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(650);
         this.setHeight(600);
         this.setTitle("Explore Page");

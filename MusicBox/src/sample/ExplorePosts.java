@@ -6,7 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,11 +24,10 @@ import java.io.IOException;
 
 public class ExplorePosts extends Stage {
     ExplorePosts(){
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(400);
         this.setHeight(600);
         this.setTitle("Artists announcements");
-
-
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #e3b0dc, #63dafa);");
         gridPane.setPadding(new Insets(20, 20, 20, 20));
@@ -34,8 +36,8 @@ public class ExplorePosts extends Stage {
         Text title1 = new Text("Artists ");
         Text title2 = new Text("announcements");
 
-        textStyle(title1);
-        textStyle(title2);
+        StylingMethods.textStyle(title1,25);
+        StylingMethods.textStyle(title2,25);
 
         gridPane.add(title1,0,0);
         gridPane.add(title2,1,0);
@@ -49,7 +51,18 @@ public class ExplorePosts extends Stage {
                 String[] postInfo = line.split(",");
                 Text artistName = new Text(postInfo[0]+": ");
                 artistName.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-                Text post = new Text(postInfo[1]);
+                Label post = new Label(postInfo[1]);
+                post.setStyle("-fx-padding: 10;" +
+                        "-fx-border-style: solid inside;" +
+                        "-fx-border-width: 2;" +
+                        "-fx-border-insets: 5;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-border-color: #005eff;"
+                );
+                Background background=new Background(new BackgroundFill(StylingMethods.generateRandomColor(),null,null));
+                post.setBackground(background);
+                post.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+
                 gridPane.add(artistName,0,row);
                 gridPane.add(post,1,row);
                 row++;
@@ -59,18 +72,11 @@ public class ExplorePosts extends Stage {
             System.out.println("File Read Error");
         }
 
-
         Scene scene = new Scene(gridPane);
         this.setScene(scene);
         this.show();
 
     }
 
-    public void textStyle(Text text){
-        text.setFont(Font.font("Arial", FontWeight.BOLD, 25));
-        text.setFill(Color.BLACK);
-        text.setStroke(Color.BLUEVIOLET);
-        text.setStrokeWidth(0.5);
-        text.setFontSmoothingType(FontSmoothingType.LCD);
-    }
+
 }

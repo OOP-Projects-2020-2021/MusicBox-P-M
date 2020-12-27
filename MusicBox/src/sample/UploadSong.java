@@ -25,6 +25,7 @@ import java.util.Map;
 public class UploadSong extends Stage {
     UploadSong( Map<String, Song> listOfSongs, Artist artist)
     {
+        this.resizableProperty().setValue(Boolean.FALSE);
         this.setWidth(600);
         this.setHeight(400);
         Text textSongName = new Text("Song Name:");
