@@ -178,7 +178,7 @@ public class ExplorePage extends Stage {
                                                     for (int i = 0; i < regularUser.getNrOfSongs(); i++) {
                                                         regularUserProfile.gridPane.getChildren().remove(regularUserProfile.removeButtons.get(i));
                                                         regularUserProfile.gridPane.getChildren().remove(regularUserProfile.songTitles.get(i));
-                                                        regularUserProfile.gridPane.getChildren().remove(regularUserProfile.hBoxes.get(i));
+                                                        //regularUserProfile.gridPane.getChildren().remove(regularUserProfile.hBoxes.get(i));
                                                         regularUserProfile.gridPane.getChildren().remove(regularUserProfile.artistNames.get(i));
                                                         regularUserProfile.gridPane.getChildren().remove(regularUserProfile.albumsTitles.get(i));
                                                         regularUserProfile.gridPane.getChildren().remove(regularUserProfile.duration.get(i));
