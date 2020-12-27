@@ -3,3 +3,4 @@ Taylor Swift,Paper Rings,Lover,3,43,pop
 Harry Styles,Sign of the Times,Harry Styles,5,41,pop
 Taylor Swift,cardigan,folklore,4,34,alternative
 Taylor Swift,willow,Evermore,4,13,alternative
+Lana Del Rey,13 Beaches,Lust for Life,4,55,alternative

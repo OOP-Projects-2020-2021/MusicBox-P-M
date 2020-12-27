@@ -246,6 +246,7 @@ public class UploadSong extends Stage {
 
                     });
                 }
+                close();
             }
             });
 
