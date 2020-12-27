@@ -296,7 +296,7 @@ public class ArtistProfile extends Stage {
         {
             gridpane.getChildren().remove(removeButtons.get(i));
             gridpane.getChildren().remove(songTitles.get(i));
-            gridpane.getChildren().remove(hBoxes.get(i));
+            //gridpane.getChildren().remove(hBoxes.get(i));
             gridpane.getChildren().remove(albumsTitles.get(i));
             gridpane.getChildren().remove(duration.get(i));
         }

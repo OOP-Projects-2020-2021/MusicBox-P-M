@@ -216,7 +216,7 @@ public class UploadSong extends Stage {
                             for (int i = 0; i < artist.getNrOfSongs(); i++) {
                                 artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().removeButtons.get(i));
                                 artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().songTitles.get(i));
-                                artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().hBoxes.get(i));
+                                //artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().hBoxes.get(i));
                                 artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().albumsTitles.get(i));
                                 artist.getArtistProfile().gridPane.getChildren().remove(artist.getArtistProfile().duration.get(i));
                             }
@@ -245,8 +245,9 @@ public class UploadSong extends Stage {
                         }
 
                     });
+                    close();
                 }
-                close();
+
             }
             });
 

@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -54,6 +56,8 @@ public class NewEntry extends Stage {
                             "-fx-border-insets: 5;" +
                             "-fx-border-radius: 5;" +
                             "-fx-border-color: #005eff;");
+                    Background background=new Background(new BackgroundFill(StylingMethods.generateRandomColor(),null,null));
+                    post.setBackground(background);
                     post.setFont(Font.font("Arial", FontWeight.BOLD, 10));
                     artist.getFeed().getPost().add(newPost.getText());
                     artist.getFeed().getPersonalFeed().gridPane.add(post,0,2+artist.getFeed().getPost().size());

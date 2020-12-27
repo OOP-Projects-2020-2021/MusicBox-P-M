@@ -4,3 +4,6 @@ Harry Styles,harrystyles,harry,1
 Lana Del Rey,lanadelrey,lana,1
 Ileana Pop,ileanapop,ileana,0
 Oana Moisa,oanamoisa,oana,0
+Ed Sheeran,edsheeran,ed,1
+The Weeknd,theweeknd,the,1
+Shawn Mendes,shawnmendes,mendes,1
