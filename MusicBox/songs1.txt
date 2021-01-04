@@ -1,11 +1,13 @@
-Taylor Swift,cardigan,folklore,4,34,alternative
-Taylor Swift,willow,Evermore,4,13,alternative
-The Weeknd,After Hours,After Hours,6,1,R&B
 Lana Del Rey,13 Beaches,Lust for Life,4,55,alternative
+Taylor Swift,august,folklore,4,24,alternative
 Taylor Swift,Blank Space,1989,4,32,pop
 Taylor Swift,Paper Rings,Lover,3,43,pop
 The Weeknd,Blinding Lights,After Hours,4,22,R&B
+Ed Sheeran,Perfect,Divide,4,39,pop
+Taylor Swift,cardigan,folklore,4,34,alternative
+Taylor Swift,willow,Evermore,4,13,alternative
+The Weeknd,After Hours,After Hours,6,1,R&B
+Taylor Swift,happiness,Evermore,5,18,alternative
 Shawn Mendes,Lost In Japan,Shawn Mendes,3,20,pop
 Shawn Mendes,Wonder,Wonder,3,14,pop
 Harry Styles,Sign of the Times,Harry Styles,5,41,pop
-Ed Sheeran,Perfect,Divide,4,39,pop

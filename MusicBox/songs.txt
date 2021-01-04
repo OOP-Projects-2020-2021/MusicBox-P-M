@@ -16,3 +16,9 @@ Shawn Mendes,Wonder,Wonder,3,14,pop
 Taylor Swift,Blank Space,1989,4,32,pop
 Taylor Swift,cardigan,folklore,4,34,alternative
 Taylor Swift,Paper Rings,Lover,3,43,pop
+Taylor Swift,champagne problems,Evermore,4,4,alternative
+Taylor Swift,august,folklore,4,24,alternative
+Taylor Swift,happiness,Evermore,5,18,alternative
+Taylor Swift,happiness,Evermore,5,18,alternative
+Taylor Swift,mirrorball,folklore,3,30,alternative
+Taylor Swift,willow,Evermore,4,13,alternative

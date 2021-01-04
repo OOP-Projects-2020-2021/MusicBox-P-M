@@ -7,3 +7,4 @@ Oana Moisa,oanamoisa,oana,0
 Ed Sheeran,edsheeran,ed,1
 The Weeknd,theweeknd,the,1
 Shawn Mendes,shawnmendes,mendes,1
+Andra Sav,andrasav,andra,0
